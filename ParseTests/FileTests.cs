@@ -14,7 +14,7 @@ namespace ParseTests
 		[TestMethod]
 		public void AddNewVoc()
 		{
-			string[] args = new[] { "add", "de:Küste", "en:coast", "hint" };
+			string[] args = { "add", "de:Küste", "en:coast", "hint" };
 			Parser p = new Parser();
 			Action<IRepository> a = p.Parse(args);
 			FileRepository repository = new FileRepository();
