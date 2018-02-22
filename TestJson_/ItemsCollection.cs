@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace ParseTests
 {
-	public class ItemsCollection:List<Item>
+	public class ItemsCollection:ICollection<Item>
 	{
+	  private readonly List<Item> _items;
 
-		public bool Contains(string key)
+	  public ItemsCollection(){
+	    _items = new List<Item>();
+	  }
+
+	  public bool Contains(string key)
 		{
 			KeyValuePair<string, string> parsedKey = ParseVocKey(key);
 			return this.Any(item => item.Words[parsedKey.Key] == parsedKey.Value);
@@ -21,7 +27,7 @@ namespace ParseTests
 			if (null == existing)
 			{
 				existing = new Item();
-				Add(existing);
+				_items.Add(existing);
 				existing.AddWord(parsedVocKey.Key, parsedVocKey.Value);
 			}
 			existing.AddWord(parsedTranslationKey.Key, parsedTranslationKey.Value);
@@ -52,9 +58,49 @@ namespace ParseTests
 			Item item = this[voc];
 			if (item != null)
 			{
-			Remove(item);
+			  _items.Remove(item);
 			}
 		}
-		
+
+	  /// <inheritdoc />
+	  IEnumerator<Item> IEnumerable<Item>.GetEnumerator(){
+	    return _items.GetEnumerator();
+	  }
+
+	  /// <inheritdoc />
+	  IEnumerator IEnumerable.GetEnumerator(){
+	    return ((IEnumerable) _items).GetEnumerator();
+	  }
+
+	  /// <inheritdoc />
+	  public void Add(Item item){
+	    _items.Add(item);
+	  }
+
+	  /// <inheritdoc />
+	  void ICollection<Item>.Clear(){
+	    _items.Clear();
+	  }
+
+	  /// <inheritdoc />
+	  bool ICollection<Item>.Contains(Item item){
+	    return _items.Contains(item);
+	  }
+
+	  /// <inheritdoc />
+	  void ICollection<Item>.CopyTo(Item[] array, int arrayIndex){
+	    _items.CopyTo(array, arrayIndex);
+	  }
+
+	  /// <inheritdoc />
+	  bool ICollection<Item>.Remove(Item item){
+	    return _items.Remove(item);
+	  }
+
+	  /// <inheritdoc />
+	  public int Count => _items.Count;
+
+	  /// <inheritdoc />
+	  bool ICollection<Item>.IsReadOnly => false;
 	}
 }

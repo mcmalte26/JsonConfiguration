@@ -43,18 +43,12 @@ namespace ParseTests
 
 		private ItemsCollection Load()
 		{
-			string jsonString = "[]";
-
-			byte[] buffer = new byte[1];
-			using (Stream fileStream = File.Open("words.json", FileMode.OpenOrCreate))
+		  using (Stream fileStream = File.Open("words.json", FileMode.OpenOrCreate))
 			{
 				using (StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8))
 				{
 					string content = streamReader.ReadToEnd();
-					if (string.IsNullOrWhiteSpace(content))
-					{
-						jsonString = "[]";
-					}
+					string jsonString = string.IsNullOrWhiteSpace(content) ? "[]" : content;
 					ItemsCollection items = JsonConvert.DeserializeObject<ItemsCollection>(jsonString);
 					return items;
 				}
