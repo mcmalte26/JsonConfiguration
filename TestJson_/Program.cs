@@ -9,7 +9,7 @@ namespace TestJson_
 {
 	class Program
 	{
-		//add <vokabel> <translation> <hint>
+		//add <voc> <translation> <hint>
 		//remove <voc>
 
 		static void Main(string[] args)

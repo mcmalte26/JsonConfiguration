@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoFileRepository.cs" />
     <Compile Include="FileRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Item.cs" />
